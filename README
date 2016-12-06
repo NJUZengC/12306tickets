@@ -1,0 +1,22 @@
+Created on Tue Dec  6 01:45:24 2016
+
+@author: ZengC
+
+命令行火车票查看器
+
+Usage:
+    tickets [-gdtkzas] <from> <to> <date>
+
+Options:
+    -h,--help   显示帮助菜单
+    -g          高铁
+    -d          动车
+    -t          特快
+    -k          快速
+    -z          直达
+    -a          成人
+    -s          学生
+
+Example:
+    tickets 北京 上海 2016-10-10
+    tickets -dg 成都 南京 2016-10-10
