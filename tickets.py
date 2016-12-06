@@ -37,7 +37,7 @@ init()
 
 class TrainsCollection:
 
-    header = '车次 车站 售票时间 起止时间 历时 一等 二等 软卧 硬卧 硬座 无座'.split()
+    header = '车次 车站 售票时间 起止时间 历时 商务 特等 一等 二等 软卧 硬卧 硬座 无座'.split()
 
     def __init__(self, available_trains, options):
         """查询到的火车班次集合
@@ -66,14 +66,21 @@ class TrainsCollection:
             train_no = raw_train['station_train_code']
             initial = train_no[0].lower()
             if not self.options or initial in self.options:
+                time = raw_train.get('sale_time')
+                if not time:
+                    time = '--'
+                else:
+                    time = raw_train['sale_time'][0:2]+'时'+ raw_train['sale_time'][2:]+'分'
                 train = [
                     train_no,        
                     '\n'.join([Fore.GREEN + raw_train['from_station_name'] + Fore.RESET,
                                Fore.RED + raw_train['to_station_name'] + Fore.RESET]),
-                    raw_train['sale_time'][0:2]+'时'+ raw_train['sale_time'][2:]+'分',
+                    time,                    
                     '\n'.join([Fore.GREEN + raw_train['start_time'] + Fore.RESET,
                                Fore.RED + raw_train['arrive_time'] + Fore.RESET]),
                     self._get_duration(raw_train,'lishi'),
+                    raw_train['swz_num'],
+                    raw_train['tz_num'],
                     raw_train['zy_num'],
                     raw_train['ze_num'],
                     raw_train['rw_num'],
